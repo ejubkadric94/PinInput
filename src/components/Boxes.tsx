@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useFocusBox from '../customHooks/useFocusBox';
+import { Storage } from '../types';
 import Box from './Box';
 import './Boxes.css'
 
@@ -9,13 +10,9 @@ type Props = {
     printFinishedMessage: () => void;
 }
 
-interface storage {
-    [key: string]: number;
-}
-
 const Boxes = ({ printFinishedMessage }: Props) => {
     const [secretMode, setSecretMode] = useState(false);
-    const [values, setValues] = useState<storage>({});
+    const [values, setValues] = useState<Storage>({});
 
     useFocusBox('#box-0');
 
@@ -23,7 +20,7 @@ const Boxes = ({ printFinishedMessage }: Props) => {
         if (Object.keys(values).length === NUMBER_OF_BOXES) {
             printFinishedMessage();
         }
-    }, [])
+    }, [values])
 
     const moveToNextBox = (index: number, value: number) => {
         setValues({
@@ -61,6 +58,7 @@ const Boxes = ({ printFinishedMessage }: Props) => {
                         index={idx}
                         onNumberEntered={moveToNextBox}
                         value={values[idx.toString()]}
+                        values={values}
                     />
                 ))}
             </div>

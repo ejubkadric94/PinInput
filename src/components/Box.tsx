@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Storage } from '../types';
 import './Box.css';
 
 type Props = {
@@ -6,16 +7,16 @@ type Props = {
     onNumberEntered: (index: number, value: number) => void;
     value?: number;
     displayAsPassword: boolean;
+    values: Storage;
 }
 
-const Box = ({ index, onNumberEntered, value, displayAsPassword }: Props) => {
+const Box = ({ index, onNumberEntered, value, displayAsPassword, values }: Props) => {
     const onValueChanged = useCallback((event: React.FormEvent<HTMLInputElement>) => {
         const value = event.currentTarget.value;
         if (value.match('[0-9]') && value.length === 1) {
-            console.log('true')
             onNumberEntered(index, Number.parseInt(value, 10));
         }
-    }, [])
+    }, [values])
     return (
         <input
             className='box'
@@ -27,7 +28,7 @@ const Box = ({ index, onNumberEntered, value, displayAsPassword }: Props) => {
             step="1"
             pattern='^[0-9]*$'
             onChange={onValueChanged}
-            value={value === null ? '' : value}
+            value={value || ''}
         />
     )
 };
