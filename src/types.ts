@@ -1,3 +1,3 @@
 export interface Storage {
-    [key: string]: number;
+    [key: string]: string;
 }
